@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PYT.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="IncomingHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.1</Value>
+    </Setting>
+    <Setting Name="IncomingPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">25050</Value>
+    </Setting>
+    <Setting Name="OutgoingHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.1</Value>
+    </Setting>
+    <Setting Name="OutgoingPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">25050</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
