@@ -37,7 +37,7 @@ namespace PYT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25050")]
+        [global::System.Configuration.DefaultSettingValueAttribute("25051")]
         public int IncomingPort {
             get {
                 return ((int)(this["IncomingPort"]));

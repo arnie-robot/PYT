@@ -10,68 +10,93 @@ namespace PYT
     {
         static void Main(string[] args)
         {
-            Coordinate a = new Coordinate(new List<string>(new string[] { "x","y","z" }));
-            a.setCoordinate("x", 0);
-            a.setCoordinate("y", 0);
-            a.setCoordinate("z", 0);
+            Console.WriteLine("Initialising Input thread");
 
-            Coordinate b = new Coordinate(new List<string>(new string[] { "x", "y", "z" }));
-            b.setCoordinate("x", 1);
-            b.setCoordinate("y", 10);
-            b.setCoordinate("z", 0);
+            InputThread i = new InputThread(PYT.Properties.Settings.Default.IncomingHost, PYT.Properties.Settings.Default.IncomingPort);
+            Thread iThread = new Thread(new ThreadStart(i.process));
+            iThread.Start();
+            Console.WriteLine("Waiting for Input thread to start...");
+            while (!iThread.IsAlive);
+            Console.WriteLine("Input thread started");
 
-            Trajectory t = new Trajectory(a, b, 10);
-            List<Coordinate> traj = t.Compute();
-
-            Console.WriteLine("Done");
-
-
-
-
-
-
-
-
-            /*Alpha oAlpha = new Alpha();
-            Thread oThread = new Thread(new ThreadStart(oAlpha.Beta));
-            Console.WriteLine("Value: " + oAlpha.number);
-            oThread.Start();
-            while (!oThread.IsAlive) ;
-            Thread.Sleep(1);
-            Console.WriteLine("Value: " + oAlpha.number);
-            oThread.Abort();
-            Console.WriteLine("Value: " + oAlpha.number);
-            oThread.Join();
-
-            Console.WriteLine();
-            Console.WriteLine("Alpha.Beta has finished");
-
-            try
+            string input = "";
+            bool exit = false;
+            while (!exit)
             {
-                Console.WriteLine("Try to restart the Alpha.Beta thread");
-                oThread.Start();
+                Console.WriteLine("Please input a command:");
+                input = Console.ReadLine();
+                switch (input.Trim())
+                {
+                    case "latest":
+                    case "l":
+                        Console.WriteLine("Latest message on Input: " + i.getLastReceived());
+                        break;
+                    case "send":
+                    case "s":
+                        // collect required information from user
+                        Console.WriteLine("Preparing to send...");
+                        List<string> coordinates = new List<string>(new string[] { "x", "y", "z" });
+                        Coordinate end = new Coordinate(coordinates);
+
+                        // load in the coord values
+                        foreach (string coord in coordinates)
+                        {
+                            Console.WriteLine("Please enter the value for coordinate " + coord);
+                            end.setCoordinate(coord, double.Parse(Console.ReadLine()));
+                        }
+
+                        Console.WriteLine("Enter the number of samples to send");
+                        int samples = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Enter the time between each sample being dispatched (milliseconds)");
+                        int period = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Enter 'execute' and press return to dispatch. Enter anything else to abort");
+                        if (Console.ReadLine() != "execute")
+                        {
+                            Console.WriteLine("Aborting");
+                            break;
+                        }
+
+                        Console.WriteLine("Collecting last known position...");
+                        Coordinate start = Coordinate.fromString(coordinates, i.getLastReceived());
+                        Console.WriteLine("... captured");
+
+                        Trajectory t = new Trajectory(start, end, samples);
+                        List<Coordinate> traj = t.Compute();
+
+                        Console.WriteLine("Trajectory computed");
+
+                        OutputThread o = new OutputThread(traj, period, PYT.Properties.Settings.Default.OutgoingHost, PYT.Properties.Settings.Default.OutgoingPort);
+                        Thread oThread = new Thread(new ThreadStart(o.process));
+                        Console.WriteLine("Output initialised");
+                        oThread.Start();
+                        Console.WriteLine("Waiting for Output thread to start...");
+                        while (!oThread.IsAlive);
+                        Console.WriteLine("Execution commenced");
+
+                        Console.WriteLine("Done");
+                        break;
+                    case "help":
+                    case "h":
+                    case "?":
+                        Console.WriteLine("Available commands: (l)atest, (s)end, (h)elp / ?, (q)uit / exit");
+                        break;
+                    case "exit":
+                    case "quit":
+                    case "q":
+                        exit = true;
+                        break;
+                    default:
+                        break;
+                }
             }
-            catch (ThreadStateException)
-            {
-                Console.Write("ThreadStateException trying to restart Alpha.Beta. ");
-                Console.WriteLine("Expected since aborted threads cannot be restarted.");
-            }
-            */
+
+            Console.WriteLine("Closing Input thread");
+            iThread.Abort();
+            Console.WriteLine("Waiting for Input thread to terminate...");
+            iThread.Join();
+            Console.WriteLine("Input thread closed");
         }
     }
-
-    public class Alpha
-    {
-        public int number = 0;
-
-        // This method that will be called when the thread is started
-        public void Beta()
-        {
-            while (true)
-            {
-                Console.WriteLine("Alpha.Beta is running in its own thread.");
-                number++;
-            }
-        }
-    };
 }

@@ -78,5 +78,44 @@ namespace PYT
         {
             return this.keys;
         }
+
+        /**
+         * Convert this coordinate to bytes
+         * 
+         * @return byte[]
+         */
+        public byte[] toBytes()
+        {
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+            string str = "";
+            List<string> list = new List<string>();
+            foreach (KeyValuePair<string, double> coord in this.coordinates)
+            {
+                list.Add(coord.Value.ToString());
+            }
+            str = string.Join(",", list.ToArray());
+            return encoding.GetBytes(str);
+        }
+
+        /**
+         * Converts the string from UDP to a Coordinate object
+         * 
+         * @param List<string> coordinates  list of coordinates to process
+         * @param string lastPosition       the string representation
+         * 
+         * @return Coordinate
+         */
+        static public Coordinate fromString(List<string> coordinates, string input)
+        {
+            string[] i = input.Split(',');
+            Coordinate c = new Coordinate(coordinates);
+            int j = 0;
+            foreach (string coord in coordinates)
+            {
+                c.setCoordinate(coord, double.Parse(i[j].Trim()));
+                j++;
+            }
+            return c;
+        }
     }
 }

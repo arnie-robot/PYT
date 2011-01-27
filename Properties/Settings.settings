@@ -6,7 +6,7 @@
       <Value Profile="(Default)">192.168.1.1</Value>
     </Setting>
     <Setting Name="IncomingPort" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">25050</Value>
+      <Value Profile="(Default)">25051</Value>
     </Setting>
     <Setting Name="OutgoingHost" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.1</Value>

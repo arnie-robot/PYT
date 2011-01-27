@@ -13,6 +13,10 @@ namespace PYT
         protected double d;
         protected double f;
 
+        // input values
+        protected double start;
+        protected double end;
+
         /**
          * Constructs the parameters, computing the values for the internal numbers
          * 
@@ -23,6 +27,8 @@ namespace PYT
          */
         public EquationParameters(double start, double end)
         {
+            this.start = start;
+            this.end = end;
             this.a = 0.5 * (end - start);
             this.b = (15.0 / 16.0) * (end - start);
             this.d = -(5.0 / 8.0) * (end - start);
@@ -38,7 +44,7 @@ namespace PYT
          */
         public double Compute(double value)
         {
-            return (this.a + (this.b*value) + (this.d*value*value*value) + (this.f*value*value*value*value*value));
+            return (this.a + (this.b*value) + (this.d*value*value*value) + (this.f*value*value*value*value*value) + this.start);
         }
     }
 }
