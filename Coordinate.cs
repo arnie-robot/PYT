@@ -8,7 +8,7 @@ namespace PYT
     class Coordinate
     {
         // Dictionary of coordinate / value pairs
-        protected Dictionary<string, int> coordinates = new Dictionary<string, int>();
+        protected Dictionary<string, double> coordinates = new Dictionary<string, double>();
 
         protected List<string> keys;
 
@@ -32,11 +32,11 @@ namespace PYT
          * Allows the updating of a coordinate value
          * 
          * @param string key        the key to update, must exist in the coordinate from construction
-         * @param int value         the value to set the coordinate to
+         * @param double value      the value to set the coordinate to
          * 
          * @return void
          */
-        public void setCoordinate(string key, int value)
+        public void setCoordinate(string key, double value)
         {
             key = key.ToLower();
             if (this.coordinates.ContainsKey(key))
@@ -54,9 +54,9 @@ namespace PYT
          * 
          * @param string key        the key to retrieve, must exist in the coordinate from construction
          * 
-         * @return int
+         * @return double
          */
-        public int getCoordinate(string key)
+        public double getCoordinate(string key)
         {
             key = key.ToLower();
             if (this.coordinates.ContainsKey(key))
