@@ -5,7 +5,7 @@
     <Setting Name="IncomingHost" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.1</Value>
     </Setting>
-    <Setting Name="IncomingPort" Type="System.Int32" Scope="User">
+    <Setting Name="IncomingDataPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25051</Value>
     </Setting>
     <Setting Name="OutgoingHost" Type="System.String" Scope="User">
@@ -13,6 +13,9 @@
     </Setting>
     <Setting Name="OutgoingPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25050</Value>
+    </Setting>
+    <Setting Name="IncomingCommandPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">25052</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -98,6 +98,19 @@ namespace PYT
         }
 
         /**
+         * Returns a serialisation for comparison
+         */
+        public string getCompareString()
+        {
+            string str = "";
+            foreach (KeyValuePair<string, double> coord in this.coordinates)
+            {
+                str += coord.Key + "," + coord.Value.ToString() + ";";
+            }
+            return str;
+        }
+
+        /**
          * Converts the string from UDP to a Coordinate object
          * 
          * @param List<string> coordinates  list of coordinates to process

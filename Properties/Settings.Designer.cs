@@ -38,12 +38,12 @@ namespace PYT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("25051")]
-        public int IncomingPort {
+        public int IncomingDataPort {
             get {
-                return ((int)(this["IncomingPort"]));
+                return ((int)(this["IncomingDataPort"]));
             }
             set {
-                this["IncomingPort"] = value;
+                this["IncomingDataPort"] = value;
             }
         }
         
@@ -68,6 +68,18 @@ namespace PYT.Properties {
             }
             set {
                 this["OutgoingPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25052")]
+        public int IncomingCommandPort {
+            get {
+                return ((int)(this["IncomingCommandPort"]));
+            }
+            set {
+                this["IncomingCommandPort"] = value;
             }
         }
     }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomatedCommander.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="EquationParameters.cs" />
     <Compile Include="InputThread.cs" />
@@ -56,6 +57,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Trajectory.cs" />
+    <Compile Include="TrajectoryDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
