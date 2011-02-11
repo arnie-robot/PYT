@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="IncomingHost" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.1</Value>
+      <Value Profile="(Default)">192.168.1.3</Value>
     </Setting>
     <Setting Name="IncomingDataPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25051</Value>

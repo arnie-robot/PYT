@@ -89,7 +89,7 @@ namespace PYT
             Coordinate previous = new Coordinate(this.coordinates);
             foreach (string coord in this.coordinates)
             {
-                previous.setCoordinate(coord, 0.0);
+                previous.setCoordinate(coord, -1000.0);
             }
 
             TrajectoryDispatcher tjd = new TrajectoryDispatcher(this.coordinates);
@@ -107,6 +107,7 @@ namespace PYT
                         tjd.setData(next, 50, 25);
                         tjd.Execute(Coordinate.fromString(this.coordinates, this.i.getLastReceived()));
                     }
+
                 }
                 catch (Exception e) { }
             }

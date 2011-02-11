@@ -67,7 +67,7 @@ namespace PYT
             catch (SocketException e)
             {
             }
-
+            recBuffer = new byte[BufferSize];
             receiveSocket.BeginReceiveFrom(recBuffer, 0, recBuffer.Length, SocketFlags.None, ref bindEndPoint, new AsyncCallback(MessageReceivedCallback), (object)this);
         }
     }
