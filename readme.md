@@ -17,7 +17,7 @@ Follow this thought pattern:
 * MJ
 * Michael Jackson
 * Michael Jackson song
-* Pretty Little Thing
+* Pretty Young Thing
 * PYT
 
 ## License
