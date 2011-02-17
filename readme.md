@@ -22,4 +22,4 @@ Follow this thought pattern:
 
 ## License
 
-PYT is licensed under the open-source MIT license.
+Copyright 2011 Chris Alexander. Licensed under the MIT License. See the LICENSE file for more information.
