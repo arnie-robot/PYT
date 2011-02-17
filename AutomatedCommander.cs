@@ -92,7 +92,7 @@ namespace PYT
                 previous.setCoordinate(coord, -1000.0);
             }
 
-            TrajectoryDispatcher tjd = new TrajectoryDispatcher(this.coordinates);
+            TrajectoryDispatcher tjd = new TrajectoryDispatcher(this.coordinates, ref this.i);
 
             while (true)
             {

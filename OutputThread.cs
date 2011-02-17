@@ -16,6 +16,9 @@ namespace PYT
         // Period between requests to dispatch
         protected int period;
 
+        // reference to the input thread
+        protected InputThread iThread;
+
         /**
          * Construct and pass to parent
          * 
@@ -24,11 +27,12 @@ namespace PYT
          * 
          * @return InputThread
          */
-        public OutputThread(List<Coordinate> trajectory, int period, string host, int port)
+        public OutputThread(List<Coordinate> trajectory, int period, string host, int port, ref InputThread iThread)
             : base(host, port)
         {
             this.trajectory = trajectory;
             this.period = period;
+            this.iThread = iThread;
         }
 
         /**
@@ -36,15 +40,41 @@ namespace PYT
          */
         public override void process()
         {
+            Coordinate prevCoord = null;
+            int threshold = 2;
+            bool quit = false;
             foreach (Coordinate coord in this.trajectory)
             {
+                if (prevCoord != null)
+                {
+                    Coordinate lastReceived = Coordinate.fromString(coord.getCoordinateNames(), this.iThread.getLastReceived());
+                    foreach (string c in coord.getCoordinateNames())
+                    {
+                        if (
+                            (coord.getCoordinate(c) > prevCoord.getCoordinate(c) + threshold) ||
+                            (coord.getCoordinate(c) < prevCoord.getCoordinate(c) - threshold)
+                            )
+                        {
+                            Console.WriteLine("WARNING: Value out of range, quitting");
+                            quit = true;
+                        }
+                    }
+                }
+                prevCoord = coord;
+                if (quit)
+                {
+                    break;
+                }
                 Socket sendSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 EndPoint sendEndPoint = new IPEndPoint(IPAddress.Parse(this.host), this.port);
                 byte[] buffer = coord.toBytes();
                 sendSocket.SendTo(buffer, buffer.Length, SocketFlags.None, sendEndPoint);
                 Thread.Sleep(this.period);
             }
-            Console.WriteLine("Execution completed");
+            if (!quit)
+            {
+                Console.WriteLine("Execution completed");
+            }
         }
     }
 }

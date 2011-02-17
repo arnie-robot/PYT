@@ -87,7 +87,7 @@ namespace PYT
                             // collect required information from user
                             Console.WriteLine("Preparing to send...");
 
-                            TrajectoryDispatcher tjd = new TrajectoryDispatcher(coordinates);
+                            TrajectoryDispatcher tjd = new TrajectoryDispatcher(coordinates, ref i);
                             tjd.collectData();
                             Console.WriteLine("Enter 'execute' and press return to dispatch. Enter anything else to abort");
                             if (Console.ReadLine() != "execute")

@@ -23,6 +23,9 @@ namespace PYT
         // the output thread
         protected Thread oThread;
 
+        // reference to the input thread
+        InputThread iThread;
+
         /**
          * Constructs the dispatcher
          * 
@@ -30,9 +33,10 @@ namespace PYT
          * 
          * @return TrajectoryDispatcher
          */
-        public TrajectoryDispatcher(List<string> coordinates)
+        public TrajectoryDispatcher(List<string> coordinates, ref InputThread iThread)
         {
             this.coordinates = coordinates;
+            this.iThread = iThread;
         }
 
         /**
@@ -99,7 +103,7 @@ namespace PYT
 
             Console.WriteLine("Trajectory computed");
 
-            OutputThread o = new OutputThread(traj, this.period, PYT.Properties.Settings.Default.OutgoingHost, PYT.Properties.Settings.Default.OutgoingPort);
+            OutputThread o = new OutputThread(traj, this.period, PYT.Properties.Settings.Default.OutgoingHost, PYT.Properties.Settings.Default.OutgoingPort, ref this.iThread);
             this.oThread = new Thread(new ThreadStart(o.process));
             Console.WriteLine("Output initialised");
             this.oThread.Start();
