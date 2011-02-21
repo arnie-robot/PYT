@@ -51,11 +51,11 @@ namespace PYT
                     foreach (string c in coord.getCoordinateNames())
                     {
                         if (
-                            (coord.getCoordinate(c) > prevCoord.getCoordinate(c) + threshold) ||
-                            (coord.getCoordinate(c) < prevCoord.getCoordinate(c) - threshold)
+                            (lastReceived.getCoordinate(c) > prevCoord.getCoordinate(c) + threshold) ||
+                            (lastReceived.getCoordinate(c) < prevCoord.getCoordinate(c) - threshold)
                             )
                         {
-                            Console.WriteLine("WARNING: Value out of range, quitting");
+                            Console.WriteLine("WARNING: Value out of range in " + c + ", " + lastReceived.getCoordinate(c).ToString() + " outside " + prevCoord.getCoordinate(c).ToString() + " with threshold " + threshold.ToString() + ". Abort!");
                             quit = true;
                         }
                     }
