@@ -19,6 +19,9 @@ namespace PYT
         // reference to the input thread
         protected InputThread iThread;
 
+        // whether reverse action is permitted
+        bool permitReverse = true;
+
         /**
          * Construct and pass to parent
          * 
@@ -41,13 +44,15 @@ namespace PYT
         public override void process()
         {
             Coordinate prevCoord = null;
+            Coordinate lastReceived = null;
             int threshold = 2;
             bool quit = false;
+            int steps = 0;
             foreach (Coordinate coord in this.trajectory)
             {
                 if (prevCoord != null)
                 {
-                    Coordinate lastReceived = Coordinate.fromString(coord.getCoordinateNames(), this.iThread.getLastReceived());
+                    lastReceived = Coordinate.fromString(coord.getCoordinateNames(), this.iThread.getLastReceived());
                     foreach (string c in coord.getCoordinateNames())
                     {
                         if (
@@ -61,6 +66,7 @@ namespace PYT
                     }
                 }
                 prevCoord = coord;
+                steps++;
                 if (quit)
                 {
                     break;
@@ -73,7 +79,21 @@ namespace PYT
             }
             if (!quit)
             {
+                // successful execution
                 Console.WriteLine("Execution completed");
+            }
+            else if (this.permitReverse && lastReceived != null)
+            {
+                // something got in the way
+                Console.WriteLine("Inconsistency detected, reversing");
+                Trajectory reverse = new Trajectory(lastReceived, this.trajectory[0], steps);
+                this.trajectory = reverse.Compute();
+                this.permitReverse = false;
+                this.process();
+            }
+            else
+            {
+                Console.WriteLine("Inconsistency detected and unable to reverse, abort!");
             }
         }
     }

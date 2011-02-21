@@ -7,7 +7,7 @@ namespace PYT
 {
     class Trajectory
     {
-        const int REQUIRED_SAMPLES = 10;
+        const int REQUIRED_SAMPLES = 1;
 
         // start and end coordinate positions
         protected Coordinate start;
