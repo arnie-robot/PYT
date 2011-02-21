@@ -45,7 +45,7 @@ namespace PYT
         {
             Coordinate prevCoord = null;
             Coordinate lastReceived = null;
-            int threshold = 2;
+            int threshold = 25;
             bool quit = false;
             foreach (Coordinate coord in this.trajectory)
             {
