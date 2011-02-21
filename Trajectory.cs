@@ -7,14 +7,12 @@ namespace PYT
 {
     class Trajectory
     {
-        const int REQUIRED_SAMPLES = 1;
-
         // start and end coordinate positions
         protected Coordinate start;
         protected Coordinate end;
 
-        // the sample count
-        protected int samples;
+        // factor to multiply sample count by
+        protected int sampleFactor;
 
         // the list of coordinates we will work with
         protected List<string> coordinates;
@@ -24,15 +22,15 @@ namespace PYT
          * 
          * @param Coordinate start      the start coordinate position
          * @param Coordinate end        the end coordinate position
-         * @param int samples           the number of samples to interpolate across
+         * @param int sampleFactor      the factor for sample calculation
          * 
          * @return Trajectory
          */
-        public Trajectory(Coordinate start, Coordinate end, int samples, List<string> coordinates = null)
+        public Trajectory(Coordinate start, Coordinate end, int sampleFactor = 1, List<string> coordinates = null)
         {
             this.start = start;
             this.end = end;
-            this.samples = samples;
+            this.sampleFactor = sampleFactor;
             if (coordinates != null)
             {
                 this.coordinates = coordinates;
@@ -52,7 +50,9 @@ namespace PYT
         {
             this.Validate();
 
-            List<Coordinate> trajectory = new List<Coordinate>(this.samples);
+            int samples = this.computeSampleCount();
+
+            List<Coordinate> trajectory = new List<Coordinate>(samples);
 
             // compute the values necessary for the trajectory equations
             Dictionary<string, EquationParameters> parameters = new Dictionary<string, EquationParameters>();
@@ -62,7 +62,7 @@ namespace PYT
             }
 
             // iterate over the samples
-            for (double i = -1; i <= 1; i += (2.0/this.samples))
+            for (double i = -1; i <= 1; i += (2.0/samples))
             {
                 Coordinate c = new Coordinate(new List<string>(new string[] { "x", "y", "z" }));
                 // iterate over the coordinates
@@ -83,12 +83,6 @@ namespace PYT
          */
         protected bool Validate()
         {
-            // validate the sample count
-            if (this.samples < REQUIRED_SAMPLES)
-            {
-                throw new InvalidTrajectoryException("Sample count of " + this.samples + " is less than the required minimum, " + REQUIRED_SAMPLES);
-            }
-
             // validate there are some coordinates to match over
             if (this.coordinates.Count < 1)
             {
@@ -136,6 +130,21 @@ namespace PYT
             }
             // save the list of coordinates matched
             this.coordinates = matching;
+        }
+
+        /**
+         * Computes the number of samples based off the size of the motion plus the factor
+         * 
+         * @return int
+         */
+        protected int computeSampleCount()
+        {
+            double squared = 0;
+            foreach (string c in this.coordinates)
+            {
+                squared += Math.Abs(Math.Pow(this.end.getCoordinate(c) - this.start.getCoordinate(c), 2.0));
+            }
+            return ((int) Math.Ceiling(Math.Sqrt(squared))) * this.sampleFactor;
         }
     }
 

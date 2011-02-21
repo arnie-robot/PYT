@@ -104,7 +104,7 @@ namespace PYT
                         previous = next;
                         // wait for the last one to finish excuting
                         tjd.wait();
-                        tjd.setData(next, 50, 25);
+                        tjd.setData(next, 1, 25);
                         tjd.Execute(Coordinate.fromString(this.coordinates, this.i.getLastReceived()));
                     }
 

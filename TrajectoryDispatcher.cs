@@ -55,7 +55,7 @@ namespace PYT
                 this.end.setCoordinate(coord, double.Parse(Console.ReadLine()));
             }
 
-            Console.WriteLine("Enter the number of samples to send");
+            Console.WriteLine("Enter the sample factor (1)");
             this.samples = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter the time between each sample being dispatched (milliseconds)");
