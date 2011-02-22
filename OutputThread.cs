@@ -49,6 +49,7 @@ namespace PYT
             bool quit = false;
             foreach (Coordinate coord in this.trajectory)
             {
+                //if (prevCoord != null)
                 if (prevCoord != null)
                 {
                     lastReceived = Coordinate.fromString(coord.getCoordinateNames(), this.iThread.getLastReceived());
@@ -86,6 +87,7 @@ namespace PYT
                 Console.WriteLine("Inconsistency detected, reversing");
                 Trajectory reverse = new Trajectory(lastReceived, this.trajectory[0]);
                 this.trajectory = reverse.Compute();
+                Console.WriteLine("Reverse trajectory has " + this.trajectory.Count.ToString() + " steps");
                 this.permitReverse = false;
                 this.process();
             }
