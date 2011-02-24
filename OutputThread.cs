@@ -85,7 +85,8 @@ namespace PYT
             {
                 // something got in the way
                 Console.WriteLine("Inconsistency detected, reversing");
-                Trajectory reverse = new Trajectory(lastReceived, this.trajectory[0]);
+                Thread.Sleep(this.period * 10);
+                Trajectory reverse = new Trajectory(Coordinate.fromString(this.trajectory[0].getCoordinateNames(), this.iThread.getLastReceived()), this.trajectory[0]);
                 this.trajectory = reverse.Compute();
                 Console.WriteLine("Reverse trajectory has " + this.trajectory.Count.ToString() + " steps");
                 this.permitReverse = false;

@@ -104,8 +104,10 @@ namespace PYT
                         previous = next;
                         // wait for the last one to finish excuting
                         tjd.wait();
-                        tjd.setData(next, 1, 25);
-                        tjd.Execute(Coordinate.fromString(this.coordinates, this.i.getLastReceived()));
+                        tjd.setData(next, 1, 35);
+                        Coordinate last = Coordinate.fromString(this.coordinates, this.i.getLastReceived());
+                        //last.setCoordinate("y", last.getCoordinate("y") - 6);
+                        tjd.Execute(last);
                     }
 
                 }
